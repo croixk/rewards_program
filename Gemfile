@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'capybara'
   gem 'orderly'
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'launchy'
   gem 'factory_bot_rails'
   gem 'faker'
