@@ -5,4 +5,8 @@ class Transaction < ApplicationRecord
   def Transaction.all_balances
     Transaction.group(:payer).sum(:points)
   end
+
+  def Transaction.total_points
+    Transaction.sum(:points)
+  end
 end
