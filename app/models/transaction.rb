@@ -9,4 +9,8 @@ class Transaction < ApplicationRecord
   def Transaction.total_points
     Transaction.sum(:points)
   end
+
+  def Transaction.get_payer_balance(payer)
+    Transaction.where(payer: payer).sum(:points)
+  end
 end
