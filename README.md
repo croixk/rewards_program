@@ -91,6 +91,8 @@ When points are spent, my spend points method created new transactions to store 
 
 My spend points method featured some Ruby logic in addition to Active Record queries and calls to helper methods that utilize Active Record. The logic for the spend points method was more involved than the other methods, but I designed this method to still run as efficiently as possible and to limit time complexity as the number of transactions grew. In one example of this, I create a list of transactions in chronological order and store this once when the spend_points method is called, and iterate through this list of transactions as needed, instead of repeatedly querying the database to find the next-oldest transaction. I also tested this method thoroughly to ensure that it handles a wide variety of different scenarios properly. 
 
+Finally, I moved as much logic as possible to the model, and used a serializer to format the reponses from my routes. 
+
 ## Testing 
 This code includes a variety of testing, both unit and feature, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my feature tests to ensure that the overall functionality is correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
 - Transactions can have positive or negative points - however, a negative transaction that is created should never result in a negative number of total points for a payer
