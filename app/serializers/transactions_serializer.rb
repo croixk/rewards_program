@@ -9,4 +9,13 @@ class TransactionsSerializer
       }
     end
   end
+
+  def self.spend_points(points)
+    points.map do |k,v|
+      {
+        "payer": k,
+        "points": v
+      }
+    end
+  end
 end

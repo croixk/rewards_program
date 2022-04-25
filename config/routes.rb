@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       post '/transactions/add_transaction', to: 'transactions#add_transaction'
 
       get '/transactions/balances', to: 'transactions#balances'
+
+      post '/transactions/spend_points', to: 'transactions#spend_points'
+
     end
   end
 end
