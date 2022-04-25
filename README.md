@@ -2,7 +2,7 @@
 
 ## Background and Description
 
-This application creates a collection of microservice endpoints for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. These endpoints accept HTTP requets, and return responses.
+This application creates a collection of microservice endpoints for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
 
 ## Requirements and Setup
 ### Ruby/Rails
