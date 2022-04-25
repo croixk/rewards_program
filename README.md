@@ -2,9 +2,9 @@
 
 ## Background and Description
 
-This application creates a rewards program, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions.
+This application creates a collection of microservices for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions.
 
-To summarize, there are three routes, to:
+To summarize, there are three routes:
 1. Post a new transaction
 - A transaction has a 'payer', a point value, and a timestamp. The payer is a brand associated with those points
 
@@ -19,7 +19,7 @@ To summarize, there are three routes, to:
 ## Requirements and Setup
 ### Ruby/Rails
 - Ruby 2.7.2
-- Rails 5.2.6.3
+- Rails 5.2.7
 ### Setup
 1. Clone this repo. On your local machine, open the terminal and enter the following command:
 
@@ -35,13 +35,13 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 5. Start the local server ```$ rails s```
 
-6. The routes can now be tested in Postman
+6. The endpoints can now be utilized as is outlined below. 
 
-## Routes and Expected Response
+## Endpoints
 
 ### Post a new transaction
 
-Route: post '/api/v1/transactions/add_transaction'
+Route: POST '/api/v1/transactions/add_transaction'
 
 Post body: 
 ```
@@ -54,7 +54,7 @@ Response:
 
 ### Return all point balances
 
-Route: get '/api/v1/transactions/balances'
+Route: GET '/api/v1/transactions/balances'
 
 Response:
 - 200 status code
@@ -70,7 +70,7 @@ Response body:
 
 ### Spend points
 
-Route: post '/api/v1/transactions/spend_points'
+Route: POST '/api/v1/transactions/spend_points'
 
 Response:
 - 200 status code if successful
