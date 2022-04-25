@@ -2,7 +2,7 @@
 
 ## Background and Description
 
-This application creates a collection of microservice endpoints for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
+This is an API application that creates a collection of endpoints for a brand-based rewards system, to be part of a microservice oriented architecture application per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
 
 ## Requirements and Setup
 ### Ruby/Rails
@@ -85,7 +85,7 @@ Reponse body:
 ```
 
 ## Design Decisions 
-I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails for the transactions, storing each new transaction as an item in the table, and used Active Record to efficiently handle my database queries, where possible. 
+I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails using PostgreSQL for the transactions, storing each new transaction as an item in the table, and used Active Record to efficiently handle my database queries, where possible. 
 
 When points are spent, my spend points method created new transactions to store this information in the transaction record, instead of updating existing transactions, since my assumption was that this would better fulfill the project intent, and would be more suitable for an accounting team. 
 
@@ -94,7 +94,7 @@ My spend points method featured some Ruby logic in addition to Active Record que
 Finally, I moved as much logic as possible to the model, and used a serializer to format the reponses from my routes. 
 
 ## Testing 
-This code includes a variety of testing, both unit and feature, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my feature tests to ensure that the overall functionality is correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
+This code includes a variety of testing, both unit and request, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my request tests to ensure that the overall functionality is correct, and that my HTTP responses are correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
 - Transactions can have positive or negative points - however, a negative transaction that is created should never result in a negative number of total points for a payer
 - If the oldest transaction for a payer has a positive number of points, but the total number of points for that payer is zero , these positive points can't be spent
 - If the total number of points across all transactions for all payers is zero, points can't be spent
