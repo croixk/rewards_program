@@ -43,6 +43,11 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 Route: post '/api/v1/transactions/add_transaction'
 
+Post body: 
+```
+{ "payer": "COCA-COLA", "points": 6000, "timestamp": "2020-11-02T14:00:00Z" }
+```
+
 Response:
 - 201 status code if transaction posts successfully
 - 404 status code if transaction does not post successfully
@@ -54,6 +59,7 @@ Route: get '/api/v1/transactions/balances'
 Response:
 - 200 status code
 
+Response body:
 ```
   {
     "DANNON": 1000,
@@ -70,6 +76,7 @@ Response:
 - 200 status code if successful
 - 400 status code if not successful
 
+Reponse body: 
 ```
   [
     { "payer": "DANNON", "points": -100 },
