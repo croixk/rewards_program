@@ -2,7 +2,7 @@
 
 ## Background and Description
 
-This application creates a relatively simple rewards program, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions.
+This application creates a rewards program, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions.
 
 To summarize, there are three routes, to:
 1. Post a new transaction
