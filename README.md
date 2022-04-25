@@ -4,18 +4,6 @@
 
 This application creates a collection of microservice endpoints for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. These endpoints accept HTTP requets, and return responses.
 
-To summarize, there are three routes. The specifics of these routes are outlined later in this document in greater detail:
-1. Post a new transaction
-- A transaction has a 'payer', a point value, and a timestamp. The payer is a brand associated with those points
-
-2. Return all point balances (summed per payer)
-- For example, if there were 5 transactions, but all for the same payer, this route would return one sum for that payer. If there were 5 transactions for 3 different payers in total, it would return 3 balances, one for each payer.
-
-3. Spend points
-- There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
-
-
-
 ## Requirements and Setup
 ### Ruby/Rails
 - Ruby 2.7.2
@@ -41,6 +29,8 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 ### Post a new transaction
 
+- A transaction has a 'payer', a point value, and a timestamp. The payer is a brand associated with those points
+
 Route: POST '/api/v1/transactions/add_transaction'
 
 Post body: 
@@ -55,6 +45,8 @@ Response:
 - A timestamp will be created automatically unless otherwise provided 
 
 ### Return all point balances
+
+- For example, if there were 5 transactions, but all for the same payer, this route would return one sum for that payer. If there were 5 transactions for 3 different payers in total, it would return 3 balances, one for each payer.
 
 Route: GET '/api/v1/transactions/balances'
 
@@ -71,6 +63,8 @@ Response body:
 ```
 
 ### Spend points
+
+- There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
 
 Route: POST '/api/v1/transactions/spend_points'
 
