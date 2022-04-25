@@ -15,14 +15,14 @@ class Transaction < ApplicationRecord
   end
 
   def Transaction.spend_points(points)
-    if Transaction.total_points > points
+    if Transaction.total_points >= points
       spend_record = Hash.new(0)
       transaction_counter = 0
       transactions = Transaction.order(:created_at)
       while points > 0
         oldest_transaction = transactions[transaction_counter]
-        #this transaction covers cost 
-        if oldest_transaction.points > points && Transaction.get_payer_balance(oldest_transaction.payer) > points
+        #this transaction covers cost
+        if oldest_transaction.points >= points && Transaction.get_payer_balance(oldest_transaction.payer) >= points
           spend_record[oldest_transaction.payer] -= points
           Transaction.create(payer: oldest_transaction.payer, points: -points)
           points = 0

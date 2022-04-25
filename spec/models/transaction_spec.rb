@@ -117,12 +117,50 @@ RSpec.describe Transaction, type: :model do
       expect(result["UNILEVER"]).to eq(-200)
     end
 
+    it 'valid spend points (exactly the number of points available)' do
+      transaction_1 = Transaction.create!(payer: 'DANNON', points: 1000, created_at: "2020-11-02T14:00:00Z", updated_at: "2020-11-02T14:00:00Z")
+      transaction_2 = Transaction.create!(payer: 'UNILEVER', points: 200, created_at: "2020-10-31T11:00:00Z", updated_at: "2020-10-31T11:00:00Z")
+      transaction_3 = Transaction.create!(payer: 'DANNON', points: -1000, created_at: "2020-10-31T15:00:00Z", updated_at: "2020-10-31T15:00:00Z")
+      transaction_4 = Transaction.create!(payer: 'MILLER_COORS', points: 10000, created_at: "2020-11-01T14:00:00Z", updated_at: "2020-11-01T14:00:00Z")
+      transaction_5 = Transaction.create!(payer: 'DANNON', points: 0, created_at: "2020-10-31T10:00:00Z", updated_at: "2020-10-31T10:00:00Z")
+
+      result = Transaction.spend_points(10200)
+      expect(result.length).to eq(2)
+      expect(result["MILLER_COORS"]).to eq(-10000)
+      expect(result["UNILEVER"]).to eq(-200)
+    end
+
+    it 'valid spend points - exactly enough points' do
+      transaction_1 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-11-02T14:00:00Z", updated_at: "2020-11-02T14:00:00Z")
+      transaction_2 = Transaction.create!(payer: 'UNILEVER', points: 1, created_at: "2020-10-31T11:00:00Z", updated_at: "2020-10-31T11:00:00Z")
+      transaction_3 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-10-31T15:00:00Z", updated_at: "2020-10-31T15:00:00Z")
+      transaction_4 = Transaction.create!(payer: 'MILLER_COORS', points: 1, created_at: "2020-11-01T14:00:00Z", updated_at: "2020-11-01T14:00:00Z")
+      transaction_5 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-10-31T10:00:00Z", updated_at: "2020-10-31T10:00:00Z")
+
+      result = Transaction.spend_points(5)
+      expect(result.length).to eq(3)
+      expect(result["MILLER_COORS"]).to eq(-1)
+      expect(result["UNILEVER"]).to eq(-1)
+      expect(result["DANNON"]).to eq(-3)
+    end
+
     it 'invalid spend points - all transactions are zero' do
       transaction_1 = Transaction.create!(payer: 'DANNON', points: 0, created_at: "2020-11-02T14:00:00Z", updated_at: "2020-11-02T14:00:00Z")
       transaction_2 = Transaction.create!(payer: 'UNILEVER', points: 0, created_at: "2020-10-31T11:00:00Z", updated_at: "2020-10-31T11:00:00Z")
       transaction_3 = Transaction.create!(payer: 'DANNON', points: 0, created_at: "2020-10-31T15:00:00Z", updated_at: "2020-10-31T15:00:00Z")
       transaction_4 = Transaction.create!(payer: 'MILLER_COORS', points: 0, created_at: "2020-11-01T14:00:00Z", updated_at: "2020-11-01T14:00:00Z")
       transaction_5 = Transaction.create!(payer: 'DANNON', points: 0, created_at: "2020-10-31T10:00:00Z", updated_at: "2020-10-31T10:00:00Z")
+
+      expected_result = 0
+      expect(Transaction.spend_points(5000)).to eq(expected_result)
+    end
+
+    it 'invalid spend points - all transactions are one (not enough total points)' do
+      transaction_1 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-11-02T14:00:00Z", updated_at: "2020-11-02T14:00:00Z")
+      transaction_2 = Transaction.create!(payer: 'UNILEVER', points: 1, created_at: "2020-10-31T11:00:00Z", updated_at: "2020-10-31T11:00:00Z")
+      transaction_3 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-10-31T15:00:00Z", updated_at: "2020-10-31T15:00:00Z")
+      transaction_4 = Transaction.create!(payer: 'MILLER_COORS', points: 1, created_at: "2020-11-01T14:00:00Z", updated_at: "2020-11-01T14:00:00Z")
+      transaction_5 = Transaction.create!(payer: 'DANNON', points: 1, created_at: "2020-10-31T10:00:00Z", updated_at: "2020-10-31T10:00:00Z")
 
       expected_result = 0
       expect(Transaction.spend_points(5000)).to eq(expected_result)
