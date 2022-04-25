@@ -25,11 +25,11 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 6. The endpoints can now be utilized as is outlined below. 
 
-## Endpoints
+## Routes
 
 ### Post a new transaction
 
-- A transaction has a 'payer', a point value, and a timestamp. The payer is a brand associated with those points
+This transaction creates a new transaction in the database, with a 'payer', a point value, and a timestamp. The payer is a brand associated with those points.
 
 Route: POST '/api/v1/transactions/add_transaction'
 
@@ -46,7 +46,7 @@ Response:
 
 ### Return all point balances
 
-- For example, if there were 5 transactions, but all for the same payer, this route would return one sum for that payer. If there were 5 transactions for 3 different payers in total, it would return 3 balances, one for each payer.
+This route returns each payer with the point total for that payer. For example, if there were 5 transactions, but all for the same payer, this route would return one sum for that payer. If there were 5 transactions for 3 different payers in total, it would return 3 balances, one for each payer.
 
 Route: GET '/api/v1/transactions/balances'
 
@@ -64,7 +64,7 @@ Response body:
 
 ### Spend points
 
-- There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
+This route receives an argument for the number of points that need to be spent, and spends those points. There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
 
 Route: POST '/api/v1/transactions/spend_points'
 
@@ -80,6 +80,13 @@ Reponse body:
     { "payer": "MILLER_COORS", "points": -4700 }
   ]
 ```
+
+## Design Decisions 
+I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails for the transactions objects, and used Active Record to efficiently handle my database queries, where possible. 
+
+When points are spent, I created new transactions to store this information in the transaction record, instead of updating existing transactions, since my assumption was that this would better fulfill the project intent, and would be more suitable for an accounting team. 
+
+My spend points method featured some Ruby logic in addition to Active Record queries and calls to helper methods that utilize Active Record. The logic for the spend points method was more involved than the other methods, but I designed this method to still run as efficiently as possible and to limit time complexity as the number of transactions grew. In one example of this, I create a list of transactions in chronological order and store this once when the spend_points method is called, instead of calling it repeatedly as the method iterates through the transactions. I also tested this method thoroughly to ensure that it handles a wide variety of different scenarios properly. 
 
 ## Testing 
 This code includes a variety of testing, both unit and feature, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my feature tests to ensure that the overall functionality is correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
