@@ -45,6 +45,11 @@ Response:
 - A timestamp will be created automatically unless otherwise provided 
 - Transaction point values can be either positive or negative - negative transactions are used to spend points from a payer account (outlined below in more detail) 
 
+Here is a screenshot of an example of this request in Postman:
+
+![Screen Shot 2022-04-25 at 7 35 41 PM](https://user-images.githubusercontent.com/20864043/165201660-23dc104c-1f01-45d7-b27f-eae63895d4cb.png)
+
+
 ### Return all point balances
 
 This route returns each payer with the point total for that payer. For example, if there were 5 transactions, but all for the same payer, this route would return one sum for that payer. If there were 5 transactions for 3 different payers in total, it would return 3 balances, one for each payer.
