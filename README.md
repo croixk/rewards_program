@@ -88,6 +88,11 @@ This route receives an argument for the number of points that need to be spent, 
 
 Route: POST '/api/v1/transactions/spend_points'
 
+Post body: 
+```
+{ "points": 5000 }
+```
+
 Response:
 - 200 status code if successful
 - 400 status code if not successful
