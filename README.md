@@ -49,6 +49,11 @@ Here is a screenshot of an example of this request in Postman:
 
 ![Screen Shot 2022-04-25 at 7 35 41 PM](https://user-images.githubusercontent.com/20864043/165201660-23dc104c-1f01-45d7-b27f-eae63895d4cb.png)
 
+Here is a screenshot of an unsuccessful post - since the points value is missing, it returns a 400 status code. 
+
+![Screen Shot 2022-04-25 at 7 50 54 PM](https://user-images.githubusercontent.com/20864043/165203403-5ea45565-b05d-4219-a0bc-284ed0842c90.png)
+
+
 
 ### Return all point balances
 
