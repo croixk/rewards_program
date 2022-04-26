@@ -23,7 +23,7 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 5. Start the local server ```$ rails s```
 
-6. The endpoints can now be utilized as is outlined below. 
+6. The endpoints can now be utilized as outlined below. 
 
 ## Routes
 
@@ -106,7 +106,7 @@ Here is another balance request - it shows that the balance was updated for Coca
 
 
 
-Here is one more screenshot, for a spend request for 5000 points. It shows that this returns a 400 status code, since there aren't 4000 points availablea. 
+Here is one more screenshot, for a spend request for 5000 points. It shows that this returns a 400 status code, since there aren't 4000 points available. 
 
 ![Screen Shot 2022-04-25 at 7 36 27 PM](https://user-images.githubusercontent.com/20864043/165202304-471ba699-c0cf-40d8-9d39-69fdbf5a22bf.png)
 
