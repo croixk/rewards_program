@@ -39,7 +39,7 @@ Post body:
 ```
 
 Response:
-- 201 status code if transaction posts successfully
+- 200 status code if transaction posts successfully
 - 400 status code if transaction does not post successfully
 - For transaction to post successfully, both a "payer" (brand), and a number of points must be provided
 - A timestamp will be created automatically unless provided 
