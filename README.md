@@ -95,14 +95,21 @@ Reponse body:
 ```
 
 Here is a screenshot from Postman after a spend request to spend 2000 points - it shows how the 2000 points were spent from the Coca-Cola account 
+
 ![Screen Shot 2022-04-25 at 7 35 59 PM](https://user-images.githubusercontent.com/20864043/165202148-7569d1e1-23e7-47df-bc46-36cd09ee7518.png)
 
 
+
 Here is another balance request - it shows that the balance was updated for Coca-Cola, from 6000 to 4000 
+
 ![Screen Shot 2022-04-25 at 7 36 10 PM](https://user-images.githubusercontent.com/20864043/165202185-f8d5a4ce-ea93-4ebc-b6cb-e69a0c7595cc.png)
 
+
+
 Here is one more screenshot, for a spend request for 5000 points. It shows that this returns a 400 status code, since there aren't 4000 points availablea. 
+
 ![Screen Shot 2022-04-25 at 7 36 27 PM](https://user-images.githubusercontent.com/20864043/165202304-471ba699-c0cf-40d8-9d39-69fdbf5a22bf.png)
+
 
 
 ## Design Decisions 
