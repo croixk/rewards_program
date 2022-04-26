@@ -40,7 +40,7 @@ Post body:
 
 Response:
 - 201 status code if transaction posts successfully
-- 404 status code if transaction does not post successfully
+- 400 status code if transaction does not post successfully
 - For transaction to post successfully, both a "payer" (brand), and a number of points must be provided
 - A timestamp will be created automatically unless provided 
 - Transaction point values can be either positive or negative - negative transactions are typically used to spend points from a payer account (outlined below in more detail) 
