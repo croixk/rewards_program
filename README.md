@@ -2,7 +2,7 @@
 
 ## Background and Description
 
-This application creates a collection of microservice endpoints for a brand-based rewards system, per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. These endpoints accept HTTP requets, and return responses.
+This is an API application that creates a collection of endpoints for a brand-based rewards system, to be part of a microservice architecture application per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
 
 ## Requirements and Setup
 ### Ruby/Rails
@@ -23,7 +23,7 @@ $ git clone git@github.com:croixk/rewards_program.git
 
 5. Start the local server ```$ rails s```
 
-6. The endpoints can now be utilized as is outlined below. 
+6. The endpoints can now be utilized as outlined below. 
 
 ## Routes
 
@@ -39,10 +39,23 @@ Post body:
 ```
 
 Response:
-- 201 status code if transaction posts successfully
-- 404 status code if transaction does not post successfully
+- 200 status code if transaction posts successfully
+- 400 status code if transaction does not post successfully
 - For transaction to post successfully, both a "payer" (brand), and a number of points must be provided
-- A timestamp will be created automatically unless otherwise provided 
+- A timestamp will be created automatically unless provided 
+- Transaction point values can be either positive or negative - negative transactions are typically used to spend points from a payer account (outlined below in more detail) 
+
+Here is a screenshot of an example of this request in Postman:
+
+![Screen Shot 2022-04-25 at 7 58 05 PM](https://user-images.githubusercontent.com/20864043/165204191-087a800f-4c06-481b-9940-d0ed6528a2ab.png)
+
+
+
+Here is a screenshot of an unsuccessful post - since the points value is missing, it returns a 400 status code. 
+
+![Screen Shot 2022-04-25 at 7 50 54 PM](https://user-images.githubusercontent.com/20864043/165203403-5ea45565-b05d-4219-a0bc-284ed0842c90.png)
+
+
 
 ### Return all point balances
 
@@ -62,9 +75,16 @@ Response body:
   }
 ```
 
+For this example response, you don't know how many total transactions there are, just that they sum to the point values shown. There would need to be at least 3 total transactions, but could be many more transactions. 
+
+Here is a screenshot of this request in Postman - it shows the balance after the Postman add transaction above.
+
+![Screen Shot 2022-04-25 at 7 35 50 PM](https://user-images.githubusercontent.com/20864043/165201918-21545d73-6a08-480d-b384-552a2957a9a3.png)
+
+
 ### Spend points
 
-This route receives an argument for the number of points that need to be spent, and spends those points. There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
+This route receives an argument for the number of points that need to be spent, and spends those points. There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values). The total points available also can't go negative - only availabe points can be spent. The logic of the spend points method ensures that these rules are followed. 
 
 Route: POST '/api/v1/transactions/spend_points'
 
@@ -81,18 +101,40 @@ Reponse body:
   ]
 ```
 
+Here is a screenshot from Postman after a spend request to spend 2000 points - it shows how the 2000 points were spent from the Coca-Cola account 
+
+![Screen Shot 2022-04-25 at 7 35 59 PM](https://user-images.githubusercontent.com/20864043/165202148-7569d1e1-23e7-47df-bc46-36cd09ee7518.png)
+
+
+
+Here is another balance request, after the spend request - it shows that the balance was updated for Coca-Cola, from 6000 to 4000 
+
+![Screen Shot 2022-04-25 at 7 36 10 PM](https://user-images.githubusercontent.com/20864043/165202185-f8d5a4ce-ea93-4ebc-b6cb-e69a0c7595cc.png)
+
+
+
+Here is one more screenshot, for a spend request for 5000 points. It shows that this returns a 400 status code, since there aren't 5000 points available after the first 2000 are spent. 
+
+![Screen Shot 2022-04-25 at 7 36 27 PM](https://user-images.githubusercontent.com/20864043/165202304-471ba699-c0cf-40d8-9d39-69fdbf5a22bf.png)
+
+
+
 ## Design Decisions 
-I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails for the transactions objects, and used Active Record to efficiently handle my database queries, where possible. 
+I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails using PostgreSQL for the transactions, storing each new transaction in the table, and used Active Record to efficiently handle my database queries where possible. 
 
-When points are spent, I created new transactions to store this information in the transaction record, instead of updating existing transactions, since my assumption was that this would better fulfill the project intent, and would be more suitable for an accounting team. 
+When points are spent, my spend points method created new transactions to store this information in the transaction record, instead of updating existing transactions, since my assumption was that this would be more suitable for an accounting team than updating existing transactions. 
 
-My spend points method featured some Ruby logic in addition to Active Record queries and calls to helper methods that utilize Active Record. The logic for the spend points method was more involved than the other methods, but I designed this method to still run as efficiently as possible and to limit time complexity as the number of transactions grew. In one example of this, I create a list of transactions in chronological order and store this once when the spend_points method is called, instead of calling it repeatedly as the method iterates through the transactions. I also tested this method thoroughly to ensure that it handles a wide variety of different scenarios properly. 
+My spend points method featured some Ruby logic in addition to Active Record queries and calls to helper methods that utilize Active Record. The logic for the spend points method was more involved than the other methods, but I designed this method to still run as efficiently as possible as the number of transactions grew. In one example of this, I create a list of transactions in chronological order and store this once when the spend_points method is called, and iterate through this list of transactions as needed, instead of repeatedly querying the database to find the next-oldest transaction. I also tested this method thoroughly to ensure that it handles a wide variety of different scenarios properly. 
+
+Finally, I moved as much logic as possible to the model, and used a serializer to format the reponses from my routes. 
 
 ## Testing 
-This code includes a variety of testing, both unit and feature, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my feature tests to ensure that the overall functionality is correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
-- Transactions can have positive or negative points
-- Oldest transaction for a payer has a positive number of points, but the total number of points for that payer is zero (these positive points can't be spent) 
-- Total number of points across all transactions for all payers is zero (regardless of number of transactions) 
-- Transaction is posted without critical information (name or payer) 
-- Transaction is posted with a specific timestamp, versus without a timestamp, allowing the application to create a timestamp for the time that it was created (both of these are acceptable, and both should be allowed)
-- A spend points request is made for a number of points that is equal to or greater to the number of total points available
+This code includes a variety of testing, both unit and request, for all functionality that is provided. In general, I used my unit tests to ensure that methods work properly, and to explore method-specific edge cases, and my request tests to ensure that the overall functionality is correct, and that my HTTP responses are correct. To run all tests, you can enter ```bundle exec rspec``` in the terminal (after following the installation instructions above). In my testing, I tried to consider a wide variety of conditions and edge cases. Some examples of these edge cases are outlined below: 
+- Transactions can have positive or negative points - however, a negative transaction that is created should never result in a negative number of total points for a payer
+- If the oldest transaction for a payer has a positive number of points, but the total number of points for that payer is zero, these positive points can't be spent
+- If the total number of points across all transactions for all payers is zero, points can't be spent
+- If a transaction is posted without critical information (name or payer), this transaction should not be stored to the database, and a status code should be returned that signifies that the post was unsuccessful
+- Transactions can be posted with a specific timestamp, or without a timestamp. If a transaction is posted without a timestamp, it should store a created at value when the transaction is created
+- A spend points request is made for a number of points that is greater than the number of total points available, the request should not be completed
+
+My testing addressess all these edge cases, among others, to ensure that the application functions as intended. 
