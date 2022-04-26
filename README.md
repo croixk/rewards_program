@@ -2,7 +2,7 @@
 
 ## Background and Description
 
-This is an API application that creates a collection of endpoints for a brand-based rewards system, to be part of a microservice oriented architecture application per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
+This is an API application that creates a collection of endpoints for a brand-based rewards system, to be part of a microservice architecture application per the specifications outlined in the Fetch Rewards Backend Software Engineering coding exercise directions. 
 
 ## Requirements and Setup
 ### Ruby/Rails
