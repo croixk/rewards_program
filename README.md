@@ -70,6 +70,11 @@ Response body:
 
 For this example response, you don't know how many total transactions there are, just that they sum to the point values shown. There would need to be at least 3 total transactions, but could be many more transactions. 
 
+Here is a screenshot of this request in Postman - it shows the balance after the add transaction above.
+
+![Screen Shot 2022-04-25 at 7 35 50 PM](https://user-images.githubusercontent.com/20864043/165201918-21545d73-6a08-480d-b384-552a2957a9a3.png)
+
+
 ### Spend points
 
 This route receives an argument for the number of points that need to be spent, and spends those points. There are a few basic rules governing how points can be spent. The oldest points must be spent first, and a payer's points must never go negative in total (though transactions can have negative point values)
@@ -88,6 +93,17 @@ Reponse body:
     { "payer": "MILLER_COORS", "points": -4700 }
   ]
 ```
+
+Here is a screenshot from Postman after a spend request to spend 2000 points - it shows how the 2000 points were spent from the Coca-Cola account 
+![Screen Shot 2022-04-25 at 7 35 59 PM](https://user-images.githubusercontent.com/20864043/165202148-7569d1e1-23e7-47df-bc46-36cd09ee7518.png)
+
+
+Here is another balance request - it shows that the balance was updated for Coca-Cola, from 6000 to 4000 
+![Screen Shot 2022-04-25 at 7 36 10 PM](https://user-images.githubusercontent.com/20864043/165202185-f8d5a4ce-ea93-4ebc-b6cb-e69a0c7595cc.png)
+
+Here is one more screenshot, for a spend request for 5000 points. It shows that this returns a 400 status code, since there aren't 4000 points availablea. 
+![Screen Shot 2022-04-25 at 7 36 27 PM](https://user-images.githubusercontent.com/20864043/165202304-471ba699-c0cf-40d8-9d39-69fdbf5a22bf.png)
+
 
 ## Design Decisions 
 I made the decision to complete this challenge as a Ruby on Rails API application. I created a database table in Rails using PostgreSQL for the transactions, storing each new transaction as an item in the table, and used Active Record to efficiently handle my database queries, where possible. 
