@@ -47,7 +47,9 @@ Response:
 
 Here is a screenshot of an example of this request in Postman:
 
-![Screen Shot 2022-04-25 at 7 35 41 PM](https://user-images.githubusercontent.com/20864043/165201660-23dc104c-1f01-45d7-b27f-eae63895d4cb.png)
+![Screen Shot 2022-04-25 at 7 58 05 PM](https://user-images.githubusercontent.com/20864043/165204191-087a800f-4c06-481b-9940-d0ed6528a2ab.png)
+
+
 
 Here is a screenshot of an unsuccessful post - since the points value is missing, it returns a 400 status code. 
 
